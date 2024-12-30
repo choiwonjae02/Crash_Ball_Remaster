@@ -16,7 +16,7 @@ pygame.mixer.init()
 
 # 배경음악 파일 로드
 
-sound = pygame.mixer.Sound ("/Users/jae/Desktop/파이게임 투사체 쪼개기/y2mate.com - Bubble Bobble Arcade  InGame Music.mp3")
+sound = pygame.mixer.Sound ("/Users/jae/Desktop/PYGAMERE/y2mate.com - Bubble Bobble Arcade  InGame Music.mp3")
 sound.set_volume(0.5)
 sound.play()
 
@@ -40,14 +40,15 @@ image_path = os.path.join(current_path, "images") # images 폴더 위치 변환
 
 # 배경 만들기
 
-background = pygame.image.load(os.path.join(image_path, #"배경화면 주소"))
+background = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/다운로드.jpeg"))
                                             
 # 스테이지 만들기
 
-stage = pygame.image.load(os.path.join(image_path, #"스테이지 사진 주소"))                                   
+stage = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/stage.png"))                                   
+stage_height = stage.get_rect().height
 
 # 캐릭터 만들기
-character = pygame.image.load(os.path.join(image_path, #"캐릭터 사진 주소"))
+character = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/우왁굳-fast.gif"))
 character_size = character.get_rect().size
 character_width = character_size[0]
 character_height = character_size[1]
@@ -61,7 +62,7 @@ character_to_x = 0
 character_speed = 5
 
 # 무기 만들기
-weapon = pygame.image.load(os.path.join(image_path, #"무기 사진 주소"))
+weapon = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/weapon.png"))
 weapon_size = weapon.get_rect().size
 weapon_width = weapon_size[0]
 
@@ -73,10 +74,10 @@ weapon_speed = 15
 
 # 공 만들가 (4개 크기에 대해 따로 처리)
 ball_images = [
-    pygame.image.load(os.path.join(image_path, #"160크기 공 사진 주소")),
-    pygame.image.load(os.path.join(image_path, #"80크기 공 사진 주소")),
-    pygame.image.load(os.path.join(image_path, #"40크기 공 사진 주소")),
-    pygame.image.load(os.path.join(image_path, #"20크기 공 사진 주소")),
+    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/ball 160.png")),
+    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/ball 80.png")),
+    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/ball 40.png")),
+    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/ball 20.png")),
 ]
 
 # 공 크기에 따른 최초 스피드
@@ -265,7 +266,7 @@ while running:
     if len(balls) == 0:
         game_result = "Mission Complete"
         running = False
-        
+         
 
     # 5. 화면에 그리기    
     screen.blit(background, (0, 0))

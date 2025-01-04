@@ -40,14 +40,14 @@ image_path = os.path.join(current_path, "images") # images 폴더 위치 변환
 
 # 배경 만들기
 
-background = pygame.image.load(os.path.join(image_path, #"배경화면 주소"))
+background = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/다운로드.jpeg"))
                                             
 # 스테이지 만들기
 
-stage = pygame.image.load(os.path.join(image_path, #"스테이지 사진 주소"))                                   
+stage = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/stage.png"))                                   
 
 # 캐릭터 만들기
-character = pygame.image.load(os.path.join(image_path, #"캐릭터 사진 주소"))
+character = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/우왁굳-fast.gif"))
 character_size = character.get_rect().size
 character_width = character_size[0]
 character_height = character_size[1]
@@ -61,7 +61,7 @@ character_to_x = 0
 character_speed = 5
 
 # 무기 만들기
-weapon = pygame.image.load(os.path.join(image_path, #"무기 사진 주소"))
+weapon = pygame.image.load(os.path.join(image_path, "무기 사진 주소"))
 weapon_size = weapon.get_rect().size
 weapon_width = weapon_size[0]
 

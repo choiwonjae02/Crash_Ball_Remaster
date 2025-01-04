@@ -14,9 +14,12 @@ pygame.init() # 초기화 (반드시 필요)
 
 pygame.mixer.init()
 
+# 효과음 파일 로드
+hit_sound = pygame.mixer.Sound('/Users/jae/Desktop/PYGAMERE/빰 때리는 소리4 (mp3cut.net).mp3')
+
 # 배경음악 파일 로드
 
-sound = pygame.mixer.Sound ("/Users/jae/Desktop/PYGAMERE/y2mate.com - Bubble Bobble Arcade  InGame Music.mp3")
+sound = pygame.mixer.Sound ("/Users/jae/Desktop/PYGAMERE/메이플스토리 약빤 브금.mp3")
 sound.set_volume(0.5)
 sound.play()
 
@@ -40,15 +43,15 @@ image_path = os.path.join(current_path, "images") # images 폴더 위치 변환
 
 # 배경 만들기
 
-background = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/다운로드.jpeg"))
+background = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/메이플 배경.png"))
                                             
 # 스테이지 만들기
 
-stage = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/stage.png"))                                   
+stage = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/메이플 스테이지.png"))                                   
 stage_height = stage.get_rect().height
 
 # 캐릭터 만들기
-character = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/우왁굳-fast.gif"))
+character = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/캐릭터.png"))
 character_size = character.get_rect().size
 character_width = character_size[0]
 character_height = character_size[1]
@@ -74,10 +77,10 @@ weapon_speed = 15
 
 # 공 만들가 (4개 크기에 대해 따로 처리)
 ball_images = [
-    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/ball 160.png")),
-    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/ball 80.png")),
-    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/ball 40.png")),
-    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/ball 20.png")),
+    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/160 버섯.png")),
+    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/80 슬라임.png")),
+    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/40 달팽이.png")),
+    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/20 메소.png")),
 ]
 
 # 공 크기에 따른 최초 스피드
@@ -214,7 +217,10 @@ while running:
             if weapon_rect.colliderect(ball_rect):
                 weapon_to_remove = weapon_idx # 해당 무기 없애기 위한 값 설정
                 ball_to_remove = ball_idx # 해당 공 없애기 위한 값 설정
-
+                
+                # 충돌 효과음 재생
+                hit_sound.play()
+                
                 # 가장 작은 크기의 공이 아니라면 다음 단계의 공으로 나눠주기
                 if ball_img_idx <3:
                     # 현재 공 크기 정보를 가지고 옴

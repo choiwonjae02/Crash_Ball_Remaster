@@ -16,6 +16,7 @@ pygame.mixer.init()
 
 # 효과음 파일 로드
 hit_sound = pygame.mixer.Sound('/Users/jae/Desktop/PYGAMERE/빰 때리는 소리4 (mp3cut.net).mp3')
+game_over_sound = pygame.mixer.Sound('/Users/jae/Desktop/PYGAMERE/y2mate.com - 마인크래프트 죽는 소리.mp3')
 
 # 배경음악 파일 로드
 
@@ -200,6 +201,8 @@ while running:
 
         # 공과 캐릭터 충돌 체크
         if character_rect.colliderect(ball_rect):
+            game_result = "Game Over"
+            game_over_sound.play()  # 게임 오버 시 효과음 재생
             running = False
             break
 
@@ -218,8 +221,8 @@ while running:
                 weapon_to_remove = weapon_idx # 해당 무기 없애기 위한 값 설정
                 ball_to_remove = ball_idx # 해당 공 없애기 위한 값 설정
                 
-                # 충돌 효과음 재생
-                hit_sound.play()
+                if weapon_rect.colliderect(ball_rect):
+                    hit_sound.play()
                 
                 # 가장 작은 크기의 공이 아니라면 다음 단계의 공으로 나눠주기
                 if ball_img_idx <3:

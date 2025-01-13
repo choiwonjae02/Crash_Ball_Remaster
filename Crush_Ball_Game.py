@@ -15,12 +15,12 @@ pygame.init() # 초기화 (반드시 필요)
 pygame.mixer.init()
 
 # 효과음 파일 로드
-hit_sound = pygame.mixer.Sound('/Users/jae/Desktop/PYGAMERE/빰 때리는 소리4 (mp3cut.net).mp3')
-game_over_sound = pygame.mixer.Sound('/Users/jae/Desktop/PYGAMERE/y2mate.com - 마인크래프트 죽는 소리.mp3')
+hit_sound = pygame.mixer.Sound('/Users/jae/Desktop/PYGAMERE/sounds/빰 때리는 소리4 (mp3cut.net).mp3')
+game_over_sound = pygame.mixer.Sound('/Users/jae/Desktop/PYGAMERE/sounds/y2mate.com - 마인크래프트 죽는 소리.mp3')
 
 # 배경음악 파일 로드
 
-sound = pygame.mixer.Sound ("/Users/jae/Desktop/PYGAMERE/메이플스토리 약빤 브금.mp3")
+sound = pygame.mixer.Sound ("/Users/jae/Desktop/PYGAMERE/sounds/메이플스토리 약빤 브금.mp3")
 sound.set_volume(0.5)
 sound.play()
 
@@ -44,15 +44,15 @@ image_path = os.path.join(current_path, "images") # images 폴더 위치 변환
 
 # 배경 만들기
 
-background = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/메이플 배경.png"))
+background = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/image/메이플 배경.png"))
                                             
 # 스테이지 만들기
 
-stage = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/메이플 스테이지.png"))                                   
+stage = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/image/메이플 스테이지.png"))                                   
 stage_height = stage.get_rect().height
 
 # 캐릭터 만들기
-character = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/캐릭터.png"))
+character = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/image/캐릭터.png"))
 character_size = character.get_rect().size
 character_width = character_size[0]
 character_height = character_size[1]
@@ -66,7 +66,7 @@ character_to_x = 0
 character_speed = 5
 
 # 무기 만들기
-weapon = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/weapon.png"))
+weapon = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/image/weapon.png"))
 weapon_size = weapon.get_rect().size
 weapon_width = weapon_size[0]
 
@@ -78,10 +78,10 @@ weapon_speed = 15
 
 # 공 만들가 (4개 크기에 대해 따로 처리)
 ball_images = [
-    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/160 버섯.png")),
-    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/80 슬라임.png")),
-    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/40 달팽이.png")),
-    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/20 메소.png")),
+    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/image/160 버섯.png")),
+    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/image/80 슬라임.png")),
+    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/image/40 달팽이.png")),
+    pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/image/20 메소.png")),
 ]
 
 # 공 크기에 따른 최초 스피드
@@ -115,6 +115,10 @@ start_ticks = pygame.time.get_ticks() # 시작 시간 정의
 # Game Over(캐릭터 공에 맞음, 실패)
 game_result = "Game Over"
 
+
+# 충돌 지점에 표시할 이미지
+collision_image = pygame.image.load(os.path.join(image_path, "/Users/jae/Desktop/PYGAMERE/image/터지는 이미지.png"))
+collision_timer = []  # 충돌 타이머를 저장할 리스트
 
 running = True
 while running:
@@ -215,7 +219,7 @@ while running:
             weapon_rect = weapon.get_rect()
             weapon_rect.left = weapon_pos_x
             weapon_rect.top = weapon_pos_y
-
+            
             # 충돌 체크
             if weapon_rect.colliderect(ball_rect):
                 weapon_to_remove = weapon_idx # 해당 무기 없애기 위한 값 설정
@@ -224,6 +228,11 @@ while running:
                 if weapon_rect.colliderect(ball_rect):
                     hit_sound.play()
                 
+
+                # 충돌 위치와 시간을 기록
+                collision_timer.append({"pos": (weapon_pos_x, weapon_pos_y), "time": pygame.time.get_ticks()})
+
+
                 # 가장 작은 크기의 공이 아니라면 다음 단계의 공으로 나눠주기
                 if ball_img_idx <3:
                     # 현재 공 크기 정보를 가지고 옴
@@ -301,7 +310,12 @@ while running:
     if total_time - elapsed_time <= 0:
         game_result = "Time Over"
         running = False
+    
 
+    # 충돌된 지점에 터지는 이미지 그리기
+    for collision in collision_timer:
+        if pygame.time.get_ticks() - collision["time"] < 200:  # 0.2초 동안 터지는 이미지 표시
+            screen.blit(collision_image, collision["pos"])
 
     pygame.display.update()
 
